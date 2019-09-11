@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "650588838027",
+    "firebase_url": "https://ssadpancake.firebaseio.com",
+    "project_id": "ssadpancake",
+    "storage_bucket": "ssadpancake.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650588838027:android:dca71844fa8bc2dbffdc8e",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.SSADPancake"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650588838027-cm72udk6jc6gh9s9ahvalas3vo7uhrnn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0lsSdbmMhKPHT7IeqmOAkQCEnWDrBOSA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650588838027-cm72udk6jc6gh9s9ahvalas3vo7uhrnn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

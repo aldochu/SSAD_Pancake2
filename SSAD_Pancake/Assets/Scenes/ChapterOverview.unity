@@ -1517,9 +1517,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1794979630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90324e31504db41d3a702664bf8642b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 17d51ae1ccfe845629ad631e445a93fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropdown: {fileID: 0}
+  question: {fileID: 0}
+  a1: {fileID: 0}
+  a2: {fileID: 0}
+  a3: {fileID: 0}
+  a4: {fileID: 0}
 --- !u!4 &1794979632
 Transform:
   m_ObjectHideFlags: 0

@@ -25,7 +25,7 @@ public class CRUDScores : MonoBehaviour
 
 
 
-    public void RandomlyGenerateQuestion()
+    public void RandomlyGenerateScores()
     {
         StudentScores newScore = new StudentScores();
 

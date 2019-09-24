@@ -19,7 +19,7 @@ public class CRUDScores : MonoBehaviour
         FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://ssadpancake.firebaseio.com/");
         // Get the root reference location of the database.
         mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
-
+        //RandomlyGenerateScores();
         getLeaderBoard("world1", "chap1", "hard");
     }
 
@@ -33,6 +33,7 @@ public class CRUDScores : MonoBehaviour
         {
             newScore.name = "student" + Random.Range(0, 10000);
             newScore.scores = Random.Range(0, 100000);
+            newScore.attempt = Random.Range(1, 3);
 
             AddNewScores("world1", "chap1", "hard", "userid"+ Random.Range(0, 10000) , newScore);
 
@@ -95,7 +96,7 @@ public class CRUDScores : MonoBehaviour
 
               for (int i = 0; i < OrderedScoreList.Length; i++)
               {
-                  leaderboardtext += "Student Name: " + OrderedScoreList[i].name + " , Scores: " + OrderedScoreList[i].scores + "\n";
+                  leaderboardtext += "Student Name: " + OrderedScoreList[i].name + " , Scores: " + OrderedScoreList[i].scores + " , Attempt: " + OrderedScoreList[i].attempt + "\n";
               }
 
 

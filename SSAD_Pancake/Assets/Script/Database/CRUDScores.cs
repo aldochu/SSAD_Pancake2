@@ -8,9 +8,9 @@ using UnityEngine.UI;
 
 public class CRUDScores : MonoBehaviour
 {
-    public Text LeaderBoardText;
-    private string leaderboardtext;
     private DatabaseReference mDatabaseRef;
+    public StudentScores[] OrderedScoreList = new StudentScores[100];
+
     // Start is called before the first frame update
 
     void Start()
@@ -19,11 +19,7 @@ public class CRUDScores : MonoBehaviour
         FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://ssadpancake.firebaseio.com/");
         // Get the root reference location of the database.
         mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
-
-        getLeaderBoard("world1", "chap1", "hard");
     }
-
-
 
     public void RandomlyGenerateScores()
     {
@@ -37,11 +33,6 @@ public class CRUDScores : MonoBehaviour
             AddNewScores("world1", "chap1", "hard", "userid"+ Random.Range(0, 10000) , newScore);
 
         }
-    }
-
-    void Update()
-    {
-        LeaderBoardText.text = leaderboardtext;
     }
 
     public void AddNewScores(string world, string chap, string difficulty, string userid, StudentScores studentscore)
@@ -71,19 +62,16 @@ public class CRUDScores : MonoBehaviour
               Debug.Log("Code Runs");
               DataSnapshot snapshot = task.Result;
 
-
               int index = 0;
-
               //currently order is ascending
               StudentScores[] scoresList = new StudentScores[100];
-
               foreach (DataSnapshot s in snapshot.Children)
               {
+                  Debug.Log(index+s.GetRawJsonValue());
                   scoresList[index] = new StudentScores();
                   scoresList[index++] = JsonUtility.FromJson<StudentScores>(s.GetRawJsonValue());
               }
-
-              StudentScores[] OrderedScoreList = new StudentScores[index];
+            //   StudentScores[] OrderedScoreList = new StudentScores[index];
               for (int i = 0; i < index; i++)
               {
                   OrderedScoreList[i] = scoresList[index-i-1];
@@ -92,15 +80,7 @@ public class CRUDScores : MonoBehaviour
 
 
               Debug.Log("Code End");
-
-              for (int i = 0; i < OrderedScoreList.Length; i++)
-              {
-                  leaderboardtext += "Student Name: " + OrderedScoreList[i].name + " , Scores: " + OrderedScoreList[i].scores + "\n";
-              }
-
-
-
-          }
+         }
       });
     }
  }

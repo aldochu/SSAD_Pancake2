@@ -15,16 +15,24 @@ public class HighscoreTableTransformer : MonoBehaviour {
         entryContainer = transform.Find("highscoreEntryContainer");
         entryTemplate = entryContainer.Find("highscoreEntryTemplate");
         entryTemplate.gameObject.SetActive(false);
-        LeaderboardController.Highscores highscores = controller.highscores;
     }
 
-    public void transformTable(LeaderboardController.Highscores highscores){
-        Debug.Log("here");
-        highscoreEntryTransformList = new List<Transform>();
-        foreach (LeaderboardController.HighscoreEntry highscoreEntry in highscores.highscoreEntryList) {
+    public void ConstructTable(List<LeaderboardController.HighscoreEntry> highscores){
+        highscoreEntryTransformList = new List<Transform>(12);
+        foreach (LeaderboardController.HighscoreEntry highscoreEntry in highscores) {
             CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
         }
     }
+
+    public void ModifyTable(LeaderboardController.HighscoreEntry highscoreEntry, int i){
+        Transform entryTransform = highscoreEntryTransformList[i];
+        int score = highscoreEntry.score;
+        entryTransform.Find("scoreText").GetComponent<Text>().text = score.ToString();
+
+        string name = highscoreEntry.name;
+        entryTransform.Find("nameText").GetComponent<Text>().text = name;
+    }
+
     private void CreateHighscoreEntryTransform(LeaderboardController.HighscoreEntry highscoreEntry, Transform container, List<Transform> transformList) {
         float templateHeight = 31f;
         Transform entryTransform = Instantiate(entryTemplate, container);
@@ -80,17 +88,5 @@ public class HighscoreTableTransformer : MonoBehaviour {
         }
 
         transformList.Add(entryTransform);
-    }
-    public class Highscores {
-        public List<HighscoreEntry> highscoreEntryList;
-    }
-
-    /*
-     * Represents a single High score entry
-     * */
-    [System.Serializable] 
-    public class HighscoreEntry {
-        public int score;
-        public string name;
     }
 }

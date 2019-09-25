@@ -6,7 +6,7 @@ using CodeMonkey.Utils;
 
 public class LeaderboardController : MonoBehaviour {
 
-    public Highscores highscores;
+    public List<HighscoreEntry> highscores;
 
     private string world = "world1";
     private string chapter = "chap1";
@@ -16,6 +16,11 @@ public class LeaderboardController : MonoBehaviour {
 
     private void Awake() {
         dbClass.getLeaderBoard(world, chapter, mode);
+        highscores= new List<HighscoreEntry>(12);
+        for (int i = 0; i<12 ;i++){
+            highscores.Add(new HighscoreEntry());
+        }
+        transformer.ConstructTable(highscores);
     }
 
     public void DropdownValueChanged(Dropdown Dropdown) {
@@ -23,35 +28,22 @@ public class LeaderboardController : MonoBehaviour {
         dbClass.getLeaderBoard(world, chapter, mode);
     }
 
-    public void RefreshLeaderBoard(){
-        highscores = new Highscores() {
-            highscoreEntryList = new List<HighscoreEntry>()
-        };
-        for (int i = 0; i < 15; i++)
-        {
-            AddHighscoreEntry(dbClass.OrderedScoreList[i].scores,dbClass.OrderedScoreList[i].name);
-            Debug.Log(string.Format("Key = {0}, Value = {1}", dbClass.OrderedScoreList[i].scores,dbClass.OrderedScoreList[i].name));
+    void Update(){
+        int i = 0;
+        foreach (StudentScores s in dbClass.OrderedScoreList) {
+            Debug.Log(string.Format("Key = {0}, Value = {1}", s.scores,s.name));
+            highscores[i].score = s.scores;
+            highscores[i].name = s.name;
+          
+            transformer.ModifyTable(highscores[i], i);
+            i++;
         }
-        transformer.transformTable(highscores);
     }
 
     public void BackToProfMode()
     {
         Application.LoadLevel("ProfMode");
         
-    }
-
-    private void AddHighscoreEntry(int score, string name) {
-        // Create HighscoreEntry
-        HighscoreEntry highscoreEntry = new HighscoreEntry { score = score, name = name };
-
-        // Add new entry to Highscores
-        highscores.highscoreEntryList.Add(highscoreEntry);
-
-        // Save updated Highscores
-        string json = JsonUtility.ToJson(highscores);
-        PlayerPrefs.SetString("highscoreTable", json);
-        PlayerPrefs.Save();
     }
 
     private void updateQueryString(string rawInput){
@@ -68,10 +60,6 @@ public class LeaderboardController : MonoBehaviour {
             case "Medium": mode = "mid"; break;
             case "Hard": mode = "hard"; break;
         }
-    }
-
-    public class Highscores {
-        public List<HighscoreEntry> highscoreEntryList;
     }
 
     /*

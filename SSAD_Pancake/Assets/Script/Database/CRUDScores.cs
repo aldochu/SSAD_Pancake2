@@ -29,6 +29,7 @@ public class CRUDScores : MonoBehaviour
         {
             newScore.name = "student" + Random.Range(0, 10000);
             newScore.scores = Random.Range(0, 100000);
+            newScore.attempt = Random.Range(1, 3);
 
             AddNewScores("world1", "chap1", "hard", "userid"+ Random.Range(0, 10000) , newScore);
 

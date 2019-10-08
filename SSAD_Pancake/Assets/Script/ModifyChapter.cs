@@ -50,6 +50,11 @@ public class ModifyChapter : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
+    public void changeChapter(int chapter)
+    {
+        QuestionData.chapter = chapter;
+    }
+
     //going a page back
     public void goBack(string sceneName)
     {

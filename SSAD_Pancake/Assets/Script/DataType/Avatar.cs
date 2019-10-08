@@ -2,20 +2,18 @@
 [System.Serializable]
 public class Avatar
 {
+    public string headgear;
     public string head;
-    public string face;
-    public string shirt;
-    public string pant;
+    public string body;
 
     public Avatar()
     {
     }
 
-    public Avatar(string head, string face, string shirt, string pant)
+    public Avatar(string headgear, string head, string body)
     {
+        this.headgear = headgear;
         this.head = head;
-        this.face = face;
-        this.shirt = shirt;
-        this.pant = pant;
+        this.body = body;
     }
 }

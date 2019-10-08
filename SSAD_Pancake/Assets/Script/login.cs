@@ -81,6 +81,13 @@ public class login : MonoBehaviour
 
             //store userid
             StaticVariable.UserID = newUser.UserId;
+
+            if (email.text == "testing@email.com")
+            {
+                Debug.Log("This is Lecture Acc");
+            }
+
+
         });
     }
 

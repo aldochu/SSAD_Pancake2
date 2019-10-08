@@ -6,30 +6,36 @@ using UnityEngine.UI;
 public class CustomizeAvatar : MonoBehaviour
 {
     public SpriteRenderer part;
+
     public Sprite[] options;
+
     public int index;
+
+    void Start()
+    {
+        
+    }
+
 
     void Update()
     {
-        for(int i = 0; i < options.Length; i++)
-        {
-            if(i == index)
-            {
-                part.sprite = options[i];
-            }
-        }
+        part.sprite = options[index];
     }
 
     public void Swap()
     {
-        if(index < options.Length - 1)
-        {
-            index++;
-        }
-        else
-        {
-            index = 0;
-        }
+        index = (index + 1) % options.Length;
+    }
+
+    public int GetIndex()
+    {
+        return index;
+    }
+
+    public void SetIndex(string index)
+    {
+        Debug.Log("setting index  " + index.Replace("\"", string.Empty));
+        this.index = System.Convert.ToInt32(index.Replace("\"", string.Empty));
     }
 
 }

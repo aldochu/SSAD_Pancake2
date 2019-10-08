@@ -20,7 +20,7 @@ public class AddUser : MonoBehaviour
 
         //updateUserWorld("world1", "chap1", "111");
         //getUser("abcdefghi");
-        updateAvatar("2", "1", "1");
+        //updateAvatar("2", "1", "1");
     }
 
 
@@ -51,23 +51,24 @@ public class AddUser : MonoBehaviour
 
     }
 
-    public void getUserAvatar()
+    public void getUserAvatar(CustomizeAvatar headGear, CustomizeAvatar head, CustomizeAvatar body)
     {
         FirebaseDatabase.DefaultInstance
       .GetReference("users").Child("abcdefghi").Child("avatar")
       .GetValueAsync().ContinueWith(task => {
           if (task.IsFaulted)
           {
-              // Handle the error...
+              Debug.Log("error");
           }
           else if (task.IsCompleted)
           {
               DataSnapshot snapshot = task.Result;
-              string[] avatar = new string[4];
-              avatar = snapshot.GetRawJsonValue().Split(',');
-
-              for(int i = 0; i <4; i++)
-              Debug.Log(avatar[i]);
+              headGear.SetIndex(snapshot.Child("headgear").GetRawJsonValue());
+              head.SetIndex(snapshot.Child("head").GetRawJsonValue());
+              body.SetIndex(snapshot.Child("body").GetRawJsonValue());
+              Debug.Log(snapshot.Child("headgear").GetRawJsonValue()
+                  + " " + snapshot.Child("head").GetRawJsonValue()
+                  + " " + snapshot.Child("body").GetRawJsonValue());
               // Do something with snapshot...
           }
       });
@@ -106,6 +107,8 @@ public class AddUser : MonoBehaviour
     {
         Avatar avatar = new Avatar(headgear, head, body);
         string json2 = JsonUtility.ToJson(avatar);
+
+        Debug.Log("updating " + headgear + " " + head + " " + body);
 
         mDatabaseRef.Child("users").Child("abcdefghi").Child("avatar").SetRawJsonValueAsync(json2);
     }

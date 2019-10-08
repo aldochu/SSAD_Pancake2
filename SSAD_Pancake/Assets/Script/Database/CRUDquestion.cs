@@ -20,8 +20,13 @@ public class CRUDquestion : MonoBehaviour
         mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
 
 
+       // GetQuestion[] qns;
+       // getQuestion("world1", "chap1", "easy");
+        /*getQuestion("world1", "chap1", "easy", (result) =>
+        {
+            qns = result;
+        });*/
 
-        getQuestion("world1", "chap1", "easy");
 
     }
 
@@ -59,8 +64,10 @@ public class CRUDquestion : MonoBehaviour
         mDatabaseRef.Child("question").Child(world).Child(chap).Child(difficulty).Child(UniqueKey).SetRawJsonValueAsync(json);
     }
 
-    public void getQuestion(string world, string chap, string difficulty)
+    public void getQuestion(string world, string chap, string difficulty, System.Action<System.Threading.Tasks.Task> callback)
     {
+        
+        System.Threading.Tasks.Task Task;
         FirebaseDatabase.DefaultInstance
       .GetReference("question").Child(world).Child(chap).Child(difficulty)
       .GetValueAsync().ContinueWith(task => {
@@ -71,15 +78,18 @@ public class CRUDquestion : MonoBehaviour
           }
           else if (task.IsCompleted)
           {
-
+              Task = task;
+              if (callback!=null)
+              {
+                  callback(Task);
+              }
               Debug.Log("Code Runs");
+              
               DataSnapshot snapshot = task.Result;
 
               
               int index = 0;
-
               GetQuestion[] questionList = new GetQuestion[100];
-
               foreach (DataSnapshot s in snapshot.Children)
               {
                   questionList[index] = new GetQuestion();
@@ -91,10 +101,8 @@ public class CRUDquestion : MonoBehaviour
                   Debug.Log("Question: " + questionList[index - 1].question.question);
 
               }
-
+             
               Debug.Log("Code End");
-
-
           }
       });
 

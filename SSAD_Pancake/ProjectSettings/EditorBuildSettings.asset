@@ -20,7 +20,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game4.unity
     guid: c3b724cdcdff8de44a4912b13dc3386d
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/Game5.unity
-    guid: f03e68db75626c448aa7765dc1dabaff
+    path: Assets/Scenes/Avatar.unity
+    guid: 14dce00c6b7214403ba2313dfcc7e115
+  - enabled: 1
+    path: Assets/Scenes/ChapterOverview.unity
+    guid: b1c99e55dafc246fe9ea671e457940ff
+  - enabled: 1
+    path: Assets/Scenes/QuestionOverview.unity
+    guid: b0f14e292d40842579cd0c20135472bb
+  - enabled: 1
+    path: Assets/Scenes/EditQandA.unity
+    guid: 3461d98a9e98649b98a041958900a88e
+  - enabled: 1
+    path: Assets/Scenes/createNewQuestion.unity
+    guid: d6506128f5d9a4dd18491cdd02d1f7d9
   m_configObjects: {}

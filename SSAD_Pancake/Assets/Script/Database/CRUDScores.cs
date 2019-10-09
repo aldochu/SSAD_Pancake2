@@ -9,7 +9,10 @@ using UnityEngine.UI;
 public class CRUDScores : MonoBehaviour
 {
     private DatabaseReference mDatabaseRef;
-    public StudentScores[] OrderedScoreList = new StudentScores[100];
+    private int threshold = 10000;
+    public StudentScores[] OrderedScoreList;
+    public Dictionary<string, double> passingRateDict;
+    public Dictionary<string, int> totalAttemptDict;
 
     // Start is called before the first frame update
 
@@ -62,6 +65,7 @@ public class CRUDScores : MonoBehaviour
 
               Debug.Log("Code Runs");
               DataSnapshot snapshot = task.Result;
+              OrderedScoreList = new StudentScores[100];
 
               int index = 0;
               //currently order is ascending
@@ -79,6 +83,52 @@ public class CRUDScores : MonoBehaviour
                   Debug.Log("Score: " + OrderedScoreList[i].name);
               }
 
+
+              Debug.Log("Code End");
+         }
+      });
+    }
+
+    public void getStatistics(string world)
+    {
+        FirebaseDatabase.DefaultInstance
+      .GetReference("scores").Child(world)
+      .GetValueAsync().ContinueWith(task =>
+      {
+          if (task.IsFaulted)
+          {
+              Debug.Log("Failed to connect");
+              // Handle the error...
+          }
+          else if (task.IsCompleted)
+          {
+
+              Debug.Log("Code Runs");
+              DataSnapshot snapshot = task.Result;
+              
+              passingRateDict = new Dictionary<string, double>();
+              totalAttemptDict = new Dictionary<string, int>();
+
+              foreach (DataSnapshot chapter in snapshot.Children)
+              {
+                foreach (DataSnapshot mode in chapter.Children ){
+                    int passCount = 0;
+                    int totalCount = 0;
+                    int totalAttempt = 0;
+                    foreach (DataSnapshot s in mode.Children ){
+                        Debug.Log(s.Key);
+                        Debug.Log(s.GetRawJsonValue());
+                        if (System.Convert.ToInt32(s.Child("scores").GetRawJsonValue()) > threshold){
+                            passCount ++;
+                        }
+                        totalCount ++;
+                        totalAttempt += System.Convert.ToInt32(s.Child("attempt").GetRawJsonValue());   
+                    }
+                    Debug.Log(chapter.Key+mode.Key);
+                    passingRateDict[chapter.Key+mode.Key] = (double) passCount / (double) totalCount;
+                    totalAttemptDict[chapter.Key+mode.Key] = totalAttempt;
+                  }
+                }
 
               Debug.Log("Code End");
          }

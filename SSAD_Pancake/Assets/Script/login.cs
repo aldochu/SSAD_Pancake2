@@ -20,12 +20,15 @@ public class login : MonoBehaviour
     public string loadProfSceneName;
 
     public string err,err2;
+
+    private bool goNextScene = false;
+    private string sceneToGo;
     // Start is called before the first frame update
     void Start()
     {
         addUser = GetComponent<AddUser>();
         auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
-        SceneManager.LoadScene(loadStudentSceneName);
+        
     }
 
     void Update()
@@ -33,6 +36,9 @@ public class login : MonoBehaviour
 
         errMsg.text = err;
         loginErr.text = err2;
+
+        if(goNextScene)
+            SceneManager.LoadScene(sceneToGo);
     }
 
 
@@ -60,8 +66,10 @@ public class login : MonoBehaviour
             //store userid
             StaticVariable.UserID = newUser.UserId;
 
-            SceneManager.LoadScene("CreateAvatar");
+            addUser.writeNewUser(newUser.UserId, email.text);
 
+            sceneToGo = loadStudentSceneName;
+            goNextScene = true;
         });
     }
 
@@ -90,14 +98,15 @@ public class login : MonoBehaviour
             if (email.text == "testing@email.com")
             {
                 Debug.Log("This is Lecture Acc");
-                SceneManager.LoadScene(loadProfSceneName);
+                sceneToGo = loadProfSceneName;
             }
+
             Debug.Log("start");
-            string loadscenename = "Scenes/" + loadStudentSceneName;
-            Debug.Log(loadscenename);
-            Application.LoadLevel("loadStudentSceneName");
-            //SceneManager.LoadScene("loadStudentSceneName");
-            Debug.Log("Done");
+
+            sceneToGo = loadStudentSceneName;
+            goNextScene = true;
+
+
         });
     }
 

@@ -4,11 +4,12 @@ using UnityEngine;
 using Firebase;
 using Firebase.Unity.Editor;
 using Firebase.Database;
-
+using UnityEngine.UI;
 
 public class AddUser : MonoBehaviour
 {
     private DatabaseReference mDatabaseRef;
+    public Text loaduserID;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +24,7 @@ public class AddUser : MonoBehaviour
         //updateUserWorld("world1", "chap1", "111");
         //getUser("abcdefghi");
         //updateAvatar("2", "1", "1");
+        loaduserID.text = StaticVariable.UserID;
     }
 
 
@@ -53,7 +55,7 @@ public class AddUser : MonoBehaviour
         User user = new User(userid, useremail);
         string json = JsonUtility.ToJson(user);
 
-        Avatar avatar = new Avatar("1", "2", "1");
+        Avatar avatar = new Avatar("0", "0", "0");
         string json2 = JsonUtility.ToJson(avatar);
 
         world world = new world("000", "000", "000", "000");

@@ -2658,6 +2658,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1404959383}
   - component: {fileID: 1404959382}
+  - component: {fileID: 1404959384}
   m_Layer: 0
   m_Name: LoginManager
   m_TagString: Untagged
@@ -2677,6 +2678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c9448b86422f04ea69a1eacb7049a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  addUser: {fileID: 0}
   Cemail: {fileID: 459625391}
   Cpassword: {fileID: 1470410104}
   email: {fileID: 203327353}
@@ -2684,6 +2686,8 @@ MonoBehaviour:
   errMsg: {fileID: 296244506}
   loginErr: {fileID: 1996389978}
   CAccCanvas: {fileID: 515859835}
+  loadStudentSceneName: CreateAvatar
+  loadProfSceneName: CreateAvatar
   err: 
   err2: 
 --- !u!4 &1404959383
@@ -2700,6 +2704,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1404959384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404959381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f26e66cd4a67c5240a656623f5d83bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loaduserID: {fileID: 215424389}
 --- !u!1 &1443678625
 GameObject:
   m_ObjectHideFlags: 0

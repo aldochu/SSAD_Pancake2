@@ -68,10 +68,8 @@ public class CRUDquestion : MonoBehaviour
         mDatabaseRef.Child("question").Child(world).Child(chap).Child(difficulty).Child(UniqueKey).SetRawJsonValueAsync(json);
     }
 
-    public void getQuestion(string world, string chap, string difficulty, System.Action<System.Threading.Tasks.Task> callback)
+    public void getQuestion(string world, string chap, string difficulty, System.Action<GetQuestion[]> callback)
     {
-        
-        System.Threading.Tasks.Task Task;
         FirebaseDatabase.DefaultInstance
       .GetReference("question").Child(world).Child(chap).Child(difficulty)
       .GetValueAsync().ContinueWith(task => {
@@ -82,11 +80,6 @@ public class CRUDquestion : MonoBehaviour
           }
           else if (task.IsCompleted)
           {
-              Task = task;
-              if (callback!=null)
-              {
-                  callback(Task);
-              }
               Debug.Log("Code Runs");
               
               DataSnapshot snapshot = task.Result;
@@ -101,11 +94,12 @@ public class CRUDquestion : MonoBehaviour
                   questionList[index++].question = JsonUtility.FromJson<UploadQuestion>(s.GetRawJsonValue());
 
 
-                  Debug.Log("Key: " + questionList[index - 1].UniqueKey);
-                  Debug.Log("Question: " + questionList[index - 1].question.question);
+                  //Debug.Log("Key: " + questionList[index - 1].UniqueKey);
+                  //Debug.Log("Question: " + questionList[index - 1].question.question);
 
               }
-             
+
+              callback(questionList);
               Debug.Log("Code End");
           }
       });

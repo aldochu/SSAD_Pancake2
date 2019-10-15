@@ -8,7 +8,7 @@ public class login : MonoBehaviour
 {
     Firebase.Auth.FirebaseAuth auth;
 
-
+    public AddUser addUser;
 
     public InputField Cemail, Cpassword, email, password;
 
@@ -16,11 +16,19 @@ public class login : MonoBehaviour
 
     public GameObject CAccCanvas;
 
+    public string loadStudentSceneName;
+    public string loadProfSceneName;
+
     public string err,err2;
+
+    private bool goNextScene = false;
+    private string sceneToGo;
     // Start is called before the first frame update
     void Start()
     {
-        auth = Firebase.Auth.FirebaseAuth.DefaultInstance; 
+        addUser = GetComponent<AddUser>();
+        auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+        
     }
 
     void Update()
@@ -28,6 +36,9 @@ public class login : MonoBehaviour
 
         errMsg.text = err;
         loginErr.text = err2;
+
+        if(goNextScene)
+            SceneManager.LoadScene(sceneToGo);
     }
 
 
@@ -55,8 +66,10 @@ public class login : MonoBehaviour
             //store userid
             StaticVariable.UserID = newUser.UserId;
 
-            SceneManager.LoadScene("CreateAvatar");
+            addUser.writeNewUser(newUser.UserId, email.text);
 
+            sceneToGo = loadStudentSceneName;
+            goNextScene = true;
         });
     }
 
@@ -76,16 +89,30 @@ public class login : MonoBehaviour
             }
 
             Firebase.Auth.FirebaseUser newUser = task.Result;
-            Debug.LogFormat("User signed in successfully: {0} ({1})",
-                newUser.DisplayName, newUser.UserId);
-
             //store userid
             StaticVariable.UserID = newUser.UserId;
+
+            /* getUSER() will set the static variable of below information
+             * public string userid;
+               public string email;
+             * public Avatar avatar = new Avatar();
+               public Universe universe = new Universe();
+             */
+            addUser.getUser(newUser.UserId); 
+           // addUser.writeNewUser(newUser.UserId, email.text);
+            Debug.LogFormat("User signed in successfully: {0} ({1})",
+                newUser.DisplayName, newUser.UserId);
 
             if (email.text == "testing@email.com")
             {
                 Debug.Log("This is Lecture Acc");
+                sceneToGo = loadProfSceneName;
             }
+
+            Debug.Log("start");
+
+            sceneToGo = loadStudentSceneName;
+            goNextScene = true;
 
 
         });

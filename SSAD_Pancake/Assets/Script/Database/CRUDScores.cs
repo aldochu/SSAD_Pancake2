@@ -25,7 +25,7 @@ public class CRUDScores : MonoBehaviour
         // Get the root reference location of the database.
         mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
 
-        RandomlyGenerateScores();
+        //RandomlyGenerateScores();
     }
 
     public void RandomlyGenerateScores()
@@ -92,6 +92,52 @@ public class CRUDScores : MonoBehaviour
               Debug.Log("Code End");
          }
       });
+    }
+
+
+    public void getUserScore(string world, string chap, string difficulty, string userid, System.Action<StudentScores> callback)
+    {
+        FirebaseDatabase.DefaultInstance
+    .GetReference("scores").Child(world).Child(chap).Child(difficulty).Child(userid)
+    .GetValueAsync().ContinueWith(task => {
+          if (task.IsFaulted)
+          {
+              Debug.Log("Failed to connect");
+              // Handle the error...
+          }
+          else if (task.IsCompleted)
+          {
+              DataSnapshot snapshot = task.Result;
+
+            StudentScores studentScore = new StudentScores();
+
+            studentScore = JsonUtility.FromJson<StudentScores>(snapshot.GetRawJsonValue());
+
+            //need to check whether it exist in database
+            if (studentScore == null)
+            {
+                Debug.Log("it's null");
+                callback(null);
+            }
+            else
+            {
+                Debug.Log("attemp:" + studentScore.attempt + "  , name is: " + studentScore.name + "  , score: " + studentScore.scores);
+                callback(studentScore);
+            }
+                
+        }
+      });
+
+    }
+
+    public void updateUserScore(string world, string chap, string difficulty, string userid, StudentScores studentscore)
+    {
+
+
+        string json = JsonUtility.ToJson(studentscore);
+
+
+        mDatabaseRef.Child("scores").Child(world).Child(chap).Child(difficulty).Child(userid).SetRawJsonValueAsync(json);
     }
 
     public void getStatistics(string world)

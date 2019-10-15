@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class AddUser : MonoBehaviour
 {
     private DatabaseReference mDatabaseRef;
-    public Text loaduserID;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +23,6 @@ public class AddUser : MonoBehaviour
         //updateUserWorld("world1", "chap1", "111");
         //getUser("abcdefghi");
         //updateAvatar("2", "1", "1");
-        loaduserID.text = StaticVariable.UserID;
     }
 
 

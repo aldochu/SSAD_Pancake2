@@ -91,6 +91,14 @@ public class login : MonoBehaviour
             Firebase.Auth.FirebaseUser newUser = task.Result;
             //store userid
             StaticVariable.UserID = newUser.UserId;
+
+            /* getUSER() will set the static variable of below information
+             * public string userid;
+               public string email;
+             * public Avatar avatar = new Avatar();
+               public Universe universe = new Universe();
+             */
+            addUser.getUser(newUser.UserId); 
            // addUser.writeNewUser(newUser.UserId, email.text);
             Debug.LogFormat("User signed in successfully: {0} ({1})",
                 newUser.DisplayName, newUser.UserId);

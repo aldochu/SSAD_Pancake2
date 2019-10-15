@@ -19,8 +19,7 @@ public class AddUser : MonoBehaviour
         
               // Get the root reference location of the database.
         mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
-        writeNewUser();
-
+        //writeNewUser();
         //updateUserWorld("world1", "chap1", "111");
         //getUser("abcdefghi");
         //updateAvatar("2", "1", "1");
@@ -45,6 +44,27 @@ public class AddUser : MonoBehaviour
         mDatabaseRef.Child("users").Child("abcdefghi").Child("universe").Child("world2").SetRawJsonValueAsync(json3);
         mDatabaseRef.Child("users").Child("abcdefghi").Child("universe").Child("world3").SetRawJsonValueAsync(json3);
         mDatabaseRef.Child("users").Child("abcdefghi").Child("universe").Child("world4").SetRawJsonValueAsync(json3);
+
+    }
+
+    public void writeNewUser(string userid, string useremail)
+    {
+        Debug.Log("New user created");
+        User user = new User(userid, useremail);
+        string json = JsonUtility.ToJson(user);
+
+        Avatar avatar = new Avatar("1", "2", "1");
+        string json2 = JsonUtility.ToJson(avatar);
+
+        world world = new world("000", "000", "000", "000");
+        string json3 = JsonUtility.ToJson(world);
+
+        mDatabaseRef.Child("users").Child(userid).SetRawJsonValueAsync(json);
+        mDatabaseRef.Child("users").Child(userid).Child("avatar").SetRawJsonValueAsync(json2);
+        mDatabaseRef.Child("users").Child(userid).Child("universe").Child("world1").SetRawJsonValueAsync(json3);
+        mDatabaseRef.Child("users").Child(userid).Child("universe").Child("world2").SetRawJsonValueAsync(json3);
+        mDatabaseRef.Child("users").Child(userid).Child("universe").Child("world3").SetRawJsonValueAsync(json3);
+        mDatabaseRef.Child("users").Child(userid).Child("universe").Child("world4").SetRawJsonValueAsync(json3);
 
     }
 

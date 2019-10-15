@@ -8,7 +8,7 @@ public class login : MonoBehaviour
 {
     Firebase.Auth.FirebaseAuth auth;
 
-
+    public AddUser addUser;
 
     public InputField Cemail, Cpassword, email, password;
 
@@ -16,11 +16,16 @@ public class login : MonoBehaviour
 
     public GameObject CAccCanvas;
 
+    public string loadStudentSceneName;
+    public string loadProfSceneName;
+
     public string err,err2;
     // Start is called before the first frame update
     void Start()
     {
-        auth = Firebase.Auth.FirebaseAuth.DefaultInstance; 
+        addUser = GetComponent<AddUser>();
+        auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+        SceneManager.LoadScene(loadStudentSceneName);
     }
 
     void Update()
@@ -76,18 +81,23 @@ public class login : MonoBehaviour
             }
 
             Firebase.Auth.FirebaseUser newUser = task.Result;
-            Debug.LogFormat("User signed in successfully: {0} ({1})",
-                newUser.DisplayName, newUser.UserId);
-
             //store userid
             StaticVariable.UserID = newUser.UserId;
+           // addUser.writeNewUser(newUser.UserId, email.text);
+            Debug.LogFormat("User signed in successfully: {0} ({1})",
+                newUser.DisplayName, newUser.UserId);
 
             if (email.text == "testing@email.com")
             {
                 Debug.Log("This is Lecture Acc");
+                SceneManager.LoadScene(loadProfSceneName);
             }
-
-
+            Debug.Log("start");
+            string loadscenename = "Scenes/" + loadStudentSceneName;
+            Debug.Log(loadscenename);
+            Application.LoadLevel("loadStudentSceneName");
+            //SceneManager.LoadScene("loadStudentSceneName");
+            Debug.Log("Done");
         });
     }
 

@@ -10,13 +10,14 @@ public class ButtonListControl : MonoBehaviour
     [SerializeField]
     private GameObject buttonTemplate;
 
+    private int numQuestions = 20;
     private void Start()
     {
-        for (int i = 0; i < 20; i++)
+        for (int i = 1; i < numQuestions + 1; i++)
         {
             GameObject button = Instantiate(buttonTemplate) as GameObject;
             button.SetActive(true);
-            button.GetComponent<ButtonListButton>().SetText("Button " + i);
+            button.GetComponent<ButtonListButton>().SetText("Question " + i);
             button.transform.SetParent(buttonTemplate.transform.parent, false);
         }
     }

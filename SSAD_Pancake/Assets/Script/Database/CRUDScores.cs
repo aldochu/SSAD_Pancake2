@@ -19,9 +19,13 @@ public class CRUDScores : MonoBehaviour
     void Start()
     {
         // Set this before calling into the realtime database.
-        FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://ssadpancake.firebaseio.com/");
+        /*FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://ssadpancake.firebaseio.com/");*/
+
+        FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://ssad-c9270.firebaseio.com/");
         // Get the root reference location of the database.
         mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
+
+        RandomlyGenerateScores();
     }
 
     public void RandomlyGenerateScores()
@@ -33,7 +37,8 @@ public class CRUDScores : MonoBehaviour
             newScore.name = "student" + Random.Range(0, 10000);
             newScore.scores = Random.Range(0, 100000);
             newScore.attempt = Random.Range(1, 3);
-
+            AddNewScores("world1", "chap1", "easy", "userid" + Random.Range(0, 10000), newScore);
+            AddNewScores("world1", "chap1", "normal", "userid" + Random.Range(0, 10000), newScore);
             AddNewScores("world1", "chap1", "hard", "userid"+ Random.Range(0, 10000) , newScore);
 
         }

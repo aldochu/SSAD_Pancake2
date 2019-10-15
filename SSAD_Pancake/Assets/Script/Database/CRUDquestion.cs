@@ -15,17 +15,20 @@ public class CRUDquestion : MonoBehaviour
     void Start()
     {
         // Set this before calling into the realtime database.
-        FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://ssadpancake.firebaseio.com/");
+        /*FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://ssadpancake.firebaseio.com/");*/
+
+        FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://ssad-c9270.firebaseio.com/");
         // Get the root reference location of the database.
         mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
 
 
+        RandomlyGenerateQuestion();
        // GetQuestion[] qns;
        // getQuestion("world1", "chap1", "easy");
-        /*getQuestion("world1", "chap1", "easy", (result) =>
-        {
-            qns = result;
-        });*/
+       /*getQuestion("world1", "chap1", "easy", (result) =>
+       {
+           qns = result;
+       });*/
 
 
     }
@@ -46,8 +49,9 @@ public class CRUDquestion : MonoBehaviour
             newQuestion.ans3 = (exp * 2 + k).ToString();
             newQuestion.ans4 = (exp * 2 + k + 1).ToString();
             newQuestion.correctAns = (exp * 2 + k).ToString();
-
-            AddNewQuestion("world1", "chap1", "easy", newQuestion);
+            AddNewQuestion("world1", "chap3", "easy", newQuestion);
+            AddNewQuestion("world1", "chap3", "normal", newQuestion);
+            AddNewQuestion("world1", "chap3", "hard", newQuestion);
 
         }
     }

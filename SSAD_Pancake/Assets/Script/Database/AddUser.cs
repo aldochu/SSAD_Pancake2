@@ -13,10 +13,13 @@ public class AddUser : MonoBehaviour
     void Start()
     {
         // Set this before calling into the realtime database.
-        FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://ssadpancake.firebaseio.com/");
-        // Get the root reference location of the database.
-         mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
-        // writeNewUser();
+        /*FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://ssadpancake.firebaseio.com/");*/
+
+        FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://ssad-c9270.firebaseio.com/");
+        
+              // Get the root reference location of the database.
+        mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
+        writeNewUser();
 
         //updateUserWorld("world1", "chap1", "111");
         //getUser("abcdefghi");

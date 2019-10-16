@@ -13,9 +13,9 @@ public class QuestionSpawner : MonoBehaviour
     public AudioSource point;
     public AudioSource fail;
     public int NumQuestions;
-    public string world;
-    public string chap;
-    public string difficulty;
+    public string world;// = StaticVariable.world;
+    public string chap;// = StaticVariable.chapter;
+    public string difficulty;// = StaticVariable.difficulty;
     public Text question;
     public Text answer1;
     public Text answer2;
@@ -37,7 +37,11 @@ public class QuestionSpawner : MonoBehaviour
     bool call = false;
     int character;
     CRUDScores crudscore;
+
+    /* Change this */
     string userID = "userid1159";// StaticVariable.UserID;
+
+
     // Start is called before the first frame update
     IEnumerator Start()
     {

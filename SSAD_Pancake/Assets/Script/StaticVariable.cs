@@ -6,4 +6,6 @@ public class StaticVariable : MonoBehaviour
 {
     public static string UserID;
     public static User UserProfile = new User();
+    public static int characterSelect;
 }
+

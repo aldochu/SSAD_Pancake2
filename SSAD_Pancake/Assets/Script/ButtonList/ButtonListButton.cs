@@ -8,6 +8,11 @@ public class ButtonListButton : MonoBehaviour
     [SerializeField]
     private Text myText;
 
+    [SerializeField]
+    private ButtonListControl buttonControl;
+
+    private string questionId;
+
     public void SetText(string textString)
     {
         myText.text = textString;
@@ -15,6 +20,6 @@ public class ButtonListButton : MonoBehaviour
 
     public void OnClick()
     {
-
+        buttonControl.ButtonClicked(buttonId);
     }
 }

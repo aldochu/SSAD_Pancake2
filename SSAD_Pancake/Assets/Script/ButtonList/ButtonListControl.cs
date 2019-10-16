@@ -10,17 +10,40 @@ public class ButtonListControl : MonoBehaviour
     [SerializeField]
     public CRUDquestion crudQuestion;
 
-    private int numQuestions = 20;
+    private GetQuestion[] questionlist;
+    private bool listGot = false;
+
+    private int numQuestions = 10;
     private void Start()
     {
-        crudQuestion = GetComponent<CRUDquestion>();
+        //crudQuestion = GetComponent<CRUDquestion>();
         crudQuestion.getQuestion("world1", "chap1", "easy", callbackFunc);
+        //Debug.Log(crudQuestion.questionList[0].question.question);
+
+    }
+
+    private void Update()
+    {
+        if (listGot)
+        {
+            for (int i = 1; i < numQuestions + 1; i++)
+            {
+                Debug.Log(": " + questionlist[i].question.question);
+                GameObject button = Instantiate(buttonTemplate) as GameObject;
+                button.SetActive(true);
+                button.GetComponent<ButtonListButton>().SetText("Question " + questionlist[i].question.question);
+                Debug.Log("Question: " + questionlist[i].question.question);
+                button.transform.SetParent(buttonTemplate.transform.parent, false);
+            }
+            listGot = false;
+        }
     }
 
     public void callbackFunc(GetQuestion[] questionList)
     {
         
         Debug.Log("CAll back begin");
+        //Debug.Log(questionList[0].question.question);
         /*
         for (int i = 0; i < 50; i++)
         {
@@ -28,13 +51,8 @@ public class ButtonListControl : MonoBehaviour
             Debug.Log("Question: " + questionList[i].question.question);
         }
         */
+        this.questionlist = questionList;
+        listGot = true;
 
-        for (int i = 1; i < numQuestions + 1; i++)
-        {
-            GameObject button = Instantiate(buttonTemplate) as GameObject;
-            button.SetActive(true);
-            button.GetComponent<ButtonListButton>().SetText("Question " + questionList[i].question.question);
-            button.transform.SetParent(buttonTemplate.transform.parent, false);
-        }
     }
 }

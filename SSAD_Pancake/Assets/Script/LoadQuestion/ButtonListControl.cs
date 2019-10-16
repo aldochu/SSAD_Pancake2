@@ -30,7 +30,7 @@ public class ButtonListControl : MonoBehaviour
             {
                 GameObject button = Instantiate(buttonTemplate) as GameObject;
                 button.SetActive(true);
-                button.GetComponent<ButtonListButton>().SetText(questionlist[i].question.question+" "+difficulty, i);
+                button.GetComponent<ButtonListButton>().SetText(questionlist[i].question.question, i);
                 button.transform.SetParent(buttonTemplate.transform.parent, false);
             }
             listGot = false;
@@ -40,12 +40,12 @@ public class ButtonListControl : MonoBehaviour
     public void callbackFunc(GetQuestion[] questionList)
     {
         this.questionlist = questionList;
+        //this.numQuestions = questionList.Length;
         listGot = true;
     }
 
     public void ButtonClicked(int questionId)
     {
-        Debug.Log(questionId);
         GameObject.Find("SceneController").GetComponent<ModifyChapter>().changeScene("EditQandA", world, chap, difficulty, questionlist[questionId]);
     }
 }

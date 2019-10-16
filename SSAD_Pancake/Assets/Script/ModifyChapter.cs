@@ -23,7 +23,6 @@ public class ModifyChapter : MonoBehaviour
             GameObject.Find("InputAnswer4").GetComponent<InputField>().text = PlayerPrefs.GetString("a4");
             GameObject.Find("CorrectAnswer").GetComponent<InputField>().text = PlayerPrefs.GetString("ca");
             GameObject.Find("DifficultyDropdown").GetComponent<Dropdown>().value = PlayerPrefs.GetString("difficulty") == "easy" ? 0 : PlayerPrefs.GetString("difficulty") == "medium" ? 1 : 2;
-            //GameObject.Find("CorrectAnswer").GetComponent<InputField>().text = PlayerPrefs.GetString("ca");
         } catch { }
 
     }
@@ -51,13 +50,6 @@ public class ModifyChapter : MonoBehaviour
     public void goBack(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
-    }
-
-    // dropdown for the difficulty of the question in the scene "EditQandA"
-    public void difficultyDropdown()
-    {
-        List<string> difficulty = new List<string>() { "1", "2", "3", "4" };
-        //dropdown.AddOptions(difficulty);
     }
 
 }

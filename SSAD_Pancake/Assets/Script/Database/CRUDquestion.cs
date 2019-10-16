@@ -161,7 +161,7 @@ public class CRUDquestion : MonoBehaviour
 
         string UniqueQuestionId = Random.Range(0, 10000).ToString() + System.DateTime.Now.Minute.ToString() + System.DateTime.Now.Second.ToString();
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < size; i++)
         {
             string json = JsonUtility.ToJson(questions[i].question);
             mDatabaseRef.Child("studentGame").Child(userid).Child(UniqueQuestionId).Child("question").Child(questions[i].UniqueKey).SetRawJsonValueAsync(json);

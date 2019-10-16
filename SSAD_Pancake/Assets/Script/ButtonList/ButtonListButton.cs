@@ -13,13 +13,15 @@ public class ButtonListButton : MonoBehaviour
 
     private string questionId;
 
-    public void SetText(string textString)
+    public void SetText(string textString, string questionId)
     {
         myText.text = textString;
+        this.questionId = questionId;
+
     }
 
     public void OnClick()
     {
-        buttonControl.ButtonClicked(buttonId);
+        buttonControl.ButtonClicked(questionId);
     }
 }

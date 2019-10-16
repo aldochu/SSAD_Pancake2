@@ -28,11 +28,9 @@ public class ButtonListControl : MonoBehaviour
         {
             for (int i = 1; i < numQuestions + 1; i++)
             {
-                Debug.Log(": " + questionlist[i].question.question);
                 GameObject button = Instantiate(buttonTemplate) as GameObject;
                 button.SetActive(true);
-                button.GetComponent<ButtonListButton>().SetText("Question " + questionlist[i].question.question);
-                Debug.Log("Question: " + questionlist[i].question.question);
+                button.GetComponent<ButtonListButton>().SetText(questionlist[i].question.question+questionlist[i].UniqueKey, questionlist[i].UniqueKey);
                 button.transform.SetParent(buttonTemplate.transform.parent, false);
             }
             listGot = false;
@@ -54,5 +52,10 @@ public class ButtonListControl : MonoBehaviour
         this.questionlist = questionList;
         listGot = true;
 
+    }
+
+    public void ButtonClicked(string questionId)
+    {
+        Debug.Log(questionId);
     }
 }

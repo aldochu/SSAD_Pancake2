@@ -11,13 +11,12 @@ public class ButtonListButton : MonoBehaviour
     [SerializeField]
     private ButtonListControl buttonControl;
 
-    private string questionId;
+    private int questionId;
 
-    public void SetText(string textString, string questionId)
+    public void SetText(string textString, int questionId)
     {
         myText.text = textString;
         this.questionId = questionId;
-
     }
 
     public void OnClick()

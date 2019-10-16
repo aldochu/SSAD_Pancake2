@@ -11,15 +11,15 @@ public class ButtonListControl : MonoBehaviour
     public CRUDquestion crudQuestion;
 
     private GetQuestion[] questionlist;
+    private string world = "world1";
+    private string chap = "chap1";
+    private string difficulty = "easy"; 
     private bool listGot = false;
 
     private int numQuestions = 10;
     private void Start()
     {
-        //crudQuestion = GetComponent<CRUDquestion>();
         crudQuestion.getQuestion("world1", "chap1", "easy", callbackFunc);
-        //Debug.Log(crudQuestion.questionList[0].question.question);
-
     }
 
     private void Update()
@@ -30,7 +30,7 @@ public class ButtonListControl : MonoBehaviour
             {
                 GameObject button = Instantiate(buttonTemplate) as GameObject;
                 button.SetActive(true);
-                button.GetComponent<ButtonListButton>().SetText(questionlist[i].question.question+questionlist[i].UniqueKey, questionlist[i].UniqueKey);
+                button.GetComponent<ButtonListButton>().SetText(questionlist[i].question.question, i);
                 button.transform.SetParent(buttonTemplate.transform.parent, false);
             }
             listGot = false;
@@ -39,23 +39,13 @@ public class ButtonListControl : MonoBehaviour
 
     public void callbackFunc(GetQuestion[] questionList)
     {
-        
-        Debug.Log("CAll back begin");
-        //Debug.Log(questionList[0].question.question);
-        /*
-        for (int i = 0; i < 50; i++)
-        {
-            Debug.Log("Key: " + questionList[i].UniqueKey);
-            Debug.Log("Question: " + questionList[i].question.question);
-        }
-        */
         this.questionlist = questionList;
+        //this.numQuestions = questionList.Length;
         listGot = true;
-
     }
 
-    public void ButtonClicked(string questionId)
+    public void ButtonClicked(int questionId)
     {
-        Debug.Log(questionId);
+        GameObject.Find("SceneController").GetComponent<ModifyChapter>().changeScene("EditQandA", world, chap, difficulty, questionlist[questionId]);
     }
 }

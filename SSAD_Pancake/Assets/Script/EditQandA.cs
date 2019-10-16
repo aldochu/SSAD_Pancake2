@@ -6,24 +6,30 @@ using UnityEngine.UI;
 
 public class EditQandA : MonoBehaviour
 {
-
+        [SerializeField]
+    public CRUDquestion crudQuestion;
     public Dropdown dropdown;
     public InputField question;
     public InputField a1, a2, a3, a4;
     string questionValue;
     string valueA1, valueA2, valueA3, valueA4;
 
+
     
     void Start()
     {
         //TODO: Connection to DB
-
+        Debug.Log("HIIIII");
         //gets current Value of InputField
         questionValue = PlayerPrefs.GetString("InputQuestion");
         valueA1 = PlayerPrefs.GetString("InputAnswer1");
         valueA2 = PlayerPrefs.GetString("InputAnswer2");
         valueA3 = PlayerPrefs.GetString("InputAnswer3");
         valueA4 = PlayerPrefs.GetString("InputAnswer4");
+
+        Debug.Log("*** "+PlayerPrefs.GetString("world"));
+
+        GameObject.Find("InputQuestion").GetComponent<InputField>().text = PlayerPrefs.GetString("world");
 
         question.text = questionValue;
         a1.text = valueA1;
@@ -55,8 +61,6 @@ public class EditQandA : MonoBehaviour
         PlayerPrefs.SetString("InputAnswer2", valueA2);
         PlayerPrefs.SetString("InputAnswer3", valueA3);
         PlayerPrefs.SetString("InputAnswer4", valueA4);
-
-
 
     }
 

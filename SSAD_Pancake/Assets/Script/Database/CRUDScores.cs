@@ -26,6 +26,7 @@ public class CRUDScores : MonoBehaviour
         mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
 
         //RandomlyGenerateScores();
+        RandomlyGenerateStudentGameScores();
     }
 
     public void RandomlyGenerateScores()
@@ -41,6 +42,21 @@ public class CRUDScores : MonoBehaviour
             AddNewScores("world1", "chap1", "normal", "userid" + Random.Range(0, 10000), newScore);
             AddNewScores("world1", "chap1", "hard", "userid"+ Random.Range(0, 10000) , newScore);
 
+        }
+    }
+
+    public void RandomlyGenerateStudentGameScores()
+    {
+        StudentScores newScore = new StudentScores();
+
+        for (int k = 0; k < 5; k++)
+        {
+            newScore.name = "student" + Random.Range(0, 10000);
+            newScore.scores = Random.Range(0, 100000);
+            newScore.attempt = Random.Range(1, 3);
+
+            AddStudentGameNewScores("student3", newScore.name, "84356", newScore);
+    
         }
     }
 
@@ -144,6 +160,19 @@ public class CRUDScores : MonoBehaviour
 
         mDatabaseRef.Child("scores").Child(world).Child(chap).Child(difficulty).Child(userid).SetRawJsonValueAsync(json);
     }
+
+
+    public void AddStudentGameNewScores(string GameOwneruserid, string userid, string UniqueQuestionId, StudentScores studentscore)
+    {
+
+
+        string json = JsonUtility.ToJson(studentscore);
+
+
+        mDatabaseRef.Child("studentGame").Child(GameOwneruserid).Child(UniqueQuestionId).Child("scores").Child(userid).SetRawJsonValueAsync(json);
+    }
+
+    
 
     public void getStatistics(string world)
     {

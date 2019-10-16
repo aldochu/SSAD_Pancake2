@@ -12,10 +12,11 @@ public class LeaderboardController : MonoBehaviour {
     private string chapter = "chap1";
     private string mode = "hard";
     public CRUDScores dbClass;
+    public bool gotData = false;
     public HighscoreTableTransformer transformer;
 
     private void Awake() {
-        dbClass.getLeaderBoard(world, chapter, mode);
+        dbClass.getLeaderBoard(world, chapter, mode, callback);
         highscores= new List<HighscoreEntry>(12);
         for (int i = 0; i<12 ;i++){
             highscores.Add(new HighscoreEntry());
@@ -25,18 +26,28 @@ public class LeaderboardController : MonoBehaviour {
 
     public void DropdownValueChanged(Dropdown Dropdown) {
         Debug.Log(Dropdown.options[Dropdown.value].text);
-        dbClass.getLeaderBoard(world, chapter, mode);
+        updateQueryString(Dropdown.options[Dropdown.value].text);
+        dbClass.getLeaderBoard(world, chapter, mode, callback);
+    }
+
+    public void callback(bool callback){
+        gotData = callback;
+        Debug.Log(gotData);
     }
 
     void Update(){
-        int i = 0;
-        foreach (StudentScores s in dbClass.OrderedScoreList) {
-            Debug.Log(string.Format("Key = {0}, Value = {1}", s.scores,s.name));
-            highscores[i].score = s.scores;
-            highscores[i].name = s.name;
-          
-            transformer.ModifyTable(highscores[i], i);
-            i++;
+        if (gotData) {
+            int i = 0;
+            foreach (StudentScores s in dbClass.OrderedScoreList) {
+                Debug.Log(string.Format("Key = {0}, Value = {1}", s.scores,s.name));
+                highscores[i].score = s.scores;
+                highscores[i].name = s.name;
+            
+                transformer.ModifyTable(highscores[i], i);
+                i++;
+            }
+            gotData = false;
+            Debug.Log(gotData);
         }
     }
 

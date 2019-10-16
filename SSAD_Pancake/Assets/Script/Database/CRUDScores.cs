@@ -54,7 +54,7 @@ public class CRUDScores : MonoBehaviour
         mDatabaseRef.Child("scores").Child(world).Child(chap).Child(difficulty).Child(userid).SetRawJsonValueAsync(json);
     }
 
-    public void getLeaderBoard(string world, string chap, string difficulty)
+    public void getLeaderBoard(string world, string chap, string difficulty, System.Action<bool> callback)
     {
         FirebaseDatabase.DefaultInstance
       .GetReference("scores").Child(world).Child(chap).Child(difficulty).OrderByChild("scores")
@@ -70,25 +70,30 @@ public class CRUDScores : MonoBehaviour
 
               Debug.Log("Code Runs");
               DataSnapshot snapshot = task.Result;
-              OrderedScoreList = new StudentScores[100];
+              OrderedScoreList = new StudentScores[12];
+              for (int i = 0; i < 12; i++)
+              {
+                  OrderedScoreList[i] = new StudentScores();
+              }
 
               int index = 0;
               //currently order is ascending
-              StudentScores[] scoresList = new StudentScores[100];
+              StudentScores[] scoresList = new StudentScores[200];
               foreach (DataSnapshot s in snapshot.Children)
               {
                   Debug.Log(index+s.GetRawJsonValue());
                   scoresList[index] = new StudentScores();
                   scoresList[index++] = JsonUtility.FromJson<StudentScores>(s.GetRawJsonValue());
               }
+                Debug.Log(index);
             //   StudentScores[] OrderedScoreList = new StudentScores[index];
-              for (int i = 0; i < index; i++)
+              for (int i = 0; i < 12 && i<index; i++)
               {
                   OrderedScoreList[i] = scoresList[index-i-1];
                   Debug.Log("Score: " + OrderedScoreList[i].name);
               }
 
-
+              callback(true);
               Debug.Log("Code End");
          }
       });

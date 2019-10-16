@@ -68,13 +68,20 @@ public class login : MonoBehaviour
 
             addUser.writeNewUser(newUser.UserId, email.text);
 
-            sceneToGo = loadStudentSceneName;
+            sceneToGo = "Avatar";
             goNextScene = true;
         });
     }
 
     public void loginAcc()
     {
+        if (email.text == "testing@email.com")
+        {
+            Debug.Log("This is Lecture Acc");
+            sceneToGo = loadProfSceneName;
+            goNextScene = true;
+        }
+
         auth.SignInWithEmailAndPasswordAsync(email.text, password.text).ContinueWith(task => {
             if (task.IsCanceled)
             {
@@ -102,12 +109,6 @@ public class login : MonoBehaviour
            // addUser.writeNewUser(newUser.UserId, email.text);
             Debug.LogFormat("User signed in successfully: {0} ({1})",
                 newUser.DisplayName, newUser.UserId);
-
-            if (email.text == "testing@email.com")
-            {
-                Debug.Log("This is Lecture Acc");
-                sceneToGo = loadProfSceneName;
-            }
 
             Debug.Log("start");
 

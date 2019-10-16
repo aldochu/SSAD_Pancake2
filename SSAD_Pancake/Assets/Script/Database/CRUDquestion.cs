@@ -23,13 +23,25 @@ public class CRUDquestion : MonoBehaviour
 
 
         RandomlyGenerateQuestion();
-       // GetQuestion[] qns;
-       // getQuestion("world1", "chap1", "easy");
-       /*getQuestion("world1", "chap1", "easy", (result) =>
-       {
-           qns = result;
-       });*/
+        // GetQuestion[] qns;
+        // getQuestion("world1", "chap1", "easy");
+        /*getQuestion("world1", "chap1", "easy", (result) =>
+        {
+            qns = result;
+        });*/
 
+        //sample of how to update question difficulty
+        /*
+        GetQuestion test = new GetQuestion();
+        test.question.question = "22+20=?";
+        test.question.ans1 = "39";
+        test.question.ans2 = "40";
+        test.question.ans3 = "41";
+        test.question.ans4 = "42";
+        test.question.correctAns = "42";
+        test.UniqueKey = "1114554";
+        UpdateQuestionDifficulty("world1", "chap1", "easy","normal",test);
+        */
 
     }
 
@@ -66,6 +78,20 @@ public class CRUDquestion : MonoBehaviour
 
 
         mDatabaseRef.Child("question").Child(world).Child(chap).Child(difficulty).Child(UniqueKey).SetRawJsonValueAsync(json);
+    }
+
+    public void UpdateQuestion(string world, string chap, string difficulty, GetQuestion question)
+    {
+        string json = JsonUtility.ToJson(question.question);
+
+        mDatabaseRef.Child("question").Child(world).Child(chap).Child(difficulty).Child(question.UniqueKey).SetRawJsonValueAsync(json);
+
+    }
+
+    public void UpdateQuestionDifficulty(string world, string chap, string oldDifficulty,string newDifficulty, GetQuestion question)
+    {
+        mDatabaseRef.Child("question").Child(world).Child(chap).Child(oldDifficulty).Child(question.UniqueKey).SetValueAsync(null);
+        AddNewQuestion(world, chap, newDifficulty, question.question);
     }
 
     public void getQuestion(string world, string chap, string difficulty, System.Action<GetQuestion[]> callback)

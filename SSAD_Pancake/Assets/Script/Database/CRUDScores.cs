@@ -25,11 +25,11 @@ public class CRUDScores : MonoBehaviour
         // Get the root reference location of the database.
         mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
 
-        //RandomlyGenerateScores();
+        //RandomlyGenerateScores("world3");
         //RandomlyGenerateStudentGameScores();
     }
 
-    public void RandomlyGenerateScores()
+    public void RandomlyGenerateScores(string world)
     {
         StudentScores newScore = new StudentScores();
 
@@ -38,10 +38,21 @@ public class CRUDScores : MonoBehaviour
             newScore.name = "student" + Random.Range(0, 10000);
             newScore.scores = Random.Range(0, 100000);
             newScore.attempt = Random.Range(1, 3);
-            AddNewScores("world1", "chap1", "easy", "userid" + Random.Range(0, 10000), newScore);
-            AddNewScores("world1", "chap1", "normal", "userid" + Random.Range(0, 10000), newScore);
-            AddNewScores("world1", "chap1", "hard", "userid"+ Random.Range(0, 10000) , newScore);
+            AddNewScores(world, "chap1", "easy", "userid" + Random.Range(0, 10000), newScore);
+            AddNewScores(world, "chap1", "normal", "userid" + Random.Range(0, 10000), newScore);
+            AddNewScores(world, "chap1", "hard", "userid"+ Random.Range(0, 10000) , newScore);
 
+            AddNewScores(world, "chap2", "easy", "userid" + Random.Range(0, 10000), newScore);
+            AddNewScores(world, "chap2", "normal", "userid" + Random.Range(0, 10000), newScore);
+            AddNewScores(world, "chap2", "hard", "userid" + Random.Range(0, 10000), newScore);
+
+            AddNewScores(world, "chap3", "easy", "userid" + Random.Range(0, 10000), newScore);
+            AddNewScores(world, "chap3", "normal", "userid" + Random.Range(0, 10000), newScore);
+            AddNewScores(world, "chap3", "hard", "userid" + Random.Range(0, 10000), newScore);
+
+            AddNewScores(world, "chap4", "easy", "userid" + Random.Range(0, 10000), newScore);
+            AddNewScores(world, "chap4", "normal", "userid" + Random.Range(0, 10000), newScore);
+            AddNewScores(world, "chap4", "hard", "userid" + Random.Range(0, 10000), newScore);
         }
     }
 
@@ -148,6 +159,41 @@ public class CRUDScores : MonoBehaviour
                 
         }
       });
+
+    }
+
+    public void getUserScore(string world, string chap, string difficulty, string userid, System.Action<StudentScores,string,string,string> callback)
+    {
+        FirebaseDatabase.DefaultInstance
+    .GetReference("scores").Child(world).Child(chap).Child(difficulty).Child(userid)
+    .GetValueAsync().ContinueWith(task => {
+        if (task.IsFaulted)
+        {
+            Debug.Log("Failed to connect");
+            // Handle the error...
+        }
+        else if (task.IsCompleted)
+        {
+            DataSnapshot snapshot = task.Result;
+
+            StudentScores studentScore = new StudentScores();
+
+            studentScore = JsonUtility.FromJson<StudentScores>(snapshot.GetRawJsonValue());
+
+            //need to check whether it exist in database
+            if (studentScore == null)
+            {
+                Debug.Log("it's null");
+                callback(null, null, null, null);
+            }
+            else
+            {
+                Debug.Log("attemp:" + studentScore.attempt + "  , name is: " + studentScore.name + "  , score: " + studentScore.scores);
+                callback(studentScore,world,chap,difficulty);
+            }
+
+        }
+    });
 
     }
 

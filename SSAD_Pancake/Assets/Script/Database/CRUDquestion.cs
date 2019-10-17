@@ -22,7 +22,7 @@ public class CRUDquestion : MonoBehaviour
         mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
 
 
-        //RandomlyGenerateQuestion();
+        //RandomlyGenerateQuestion("world2");
         // GetQuestion[] qns;
         // getQuestion("world1", "chap1", "easy");
         /*getQuestion("world1", "chap1", "easy", (result) =>
@@ -50,7 +50,7 @@ public class CRUDquestion : MonoBehaviour
 
 
 
-    public void RandomlyGenerateQuestion()
+    public void RandomlyGenerateQuestion(string world)
     {
         UploadQuestion newQuestion = new UploadQuestion();
 
@@ -64,10 +64,22 @@ public class CRUDquestion : MonoBehaviour
             newQuestion.ans3 = (exp * 2 + k).ToString();
             newQuestion.ans4 = (exp * 2 + k + 1).ToString();
             newQuestion.correctAns = (exp * 2 + k).ToString();
-            AddNewQuestion("world1", "chap3", "easy", newQuestion);
-            AddNewQuestion("world1", "chap3", "normal", newQuestion);
-            AddNewQuestion("world1", "chap3", "hard", newQuestion);
 
+            AddNewQuestion(world, "chap1", "easy", newQuestion);
+            AddNewQuestion(world, "chap1", "normal", newQuestion);
+            AddNewQuestion(world, "chap1", "hard", newQuestion);
+
+            AddNewQuestion(world, "chap2", "easy", newQuestion);
+            AddNewQuestion(world, "chap2", "normal", newQuestion);
+            AddNewQuestion(world, "chap2", "hard", newQuestion);
+
+            AddNewQuestion(world, "chap3", "easy", newQuestion);
+            AddNewQuestion(world, "chap3", "normal", newQuestion);
+            AddNewQuestion(world, "chap3", "hard", newQuestion);
+
+            AddNewQuestion(world, "chap4", "easy", newQuestion);
+            AddNewQuestion(world, "chap4", "normal", newQuestion);
+            AddNewQuestion(world, "chap4", "hard", newQuestion);
         }
     }
 

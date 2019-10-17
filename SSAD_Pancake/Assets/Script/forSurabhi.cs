@@ -9,9 +9,12 @@ public class forSurabhi : MonoBehaviour
 
     private string chap, world, difficulty, userid;
     private CRUDScores crudscore;
-    public Text UItext;
+    public Text UItext, UItext2;
     private bool callbackdone = false;
-    private StudentScores myScore; 
+    private StudentScores myScore;
+
+
+    private string _chap, _world, _difficulty;
     void Start()
     {
         chap = "chap1";
@@ -28,14 +31,18 @@ public class forSurabhi : MonoBehaviour
         if (callbackdone)
         {
             UItext.text = "my name: " + myScore.name + " , my Score: " + myScore.scores.ToString();
+            UItext2.text = "World: " + _world + " , chap: " + _chap + ", level: " + _difficulty; 
             callbackdone = false;
         }
     }
 
-    public void myCallbackFunction(StudentScores myScore)
+    public void myCallbackFunction(StudentScores myScore, string world, string chap, string difficulty)
     {
         Debug.Log("call back executed");
         this.myScore = myScore;
+        _chap = chap;
+        _world = world;
+        _difficulty = difficulty;
         callbackdone = true;
     }
 }

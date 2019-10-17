@@ -26,7 +26,7 @@ public class CRUDScores : MonoBehaviour
         mDatabaseRef = FirebaseDatabase.DefaultInstance.RootReference;
 
         //RandomlyGenerateScores();
-        RandomlyGenerateStudentGameScores();
+        //RandomlyGenerateStudentGameScores();
     }
 
     public void RandomlyGenerateScores()

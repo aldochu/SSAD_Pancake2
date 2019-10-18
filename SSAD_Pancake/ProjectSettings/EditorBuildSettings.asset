@@ -50,4 +50,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CharacterSelection.unity
     guid: 039e9d715d9938e498b76f5c6ce824c6
+  - enabled: 1
+    path: Assets/Scenes/Universe.unity
+    guid: 002283e34136644458a3807e5d2e083d
+  - enabled: 1
+    path: Assets/Scenes/World1.unity
+    guid: 61ff4284a1a7e4f9ca20a5ac06b95884
+  - enabled: 1
+    path: Assets/Scenes/World2.unity
+    guid: 441fe24ebd0aa49a69d0b02f724dc8f8
   m_configObjects: {}
